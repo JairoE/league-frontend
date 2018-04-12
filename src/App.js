@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import { Router, Switch, Link, NavLink } from 'react-router-dom';
+import SignInForm from './Components/SignIn.js';
+import UserHomePage from './Components/UserHomePage.js';
+// import './App.css';
+
 
 class App extends Component {
-  componentDidMount(){
+
+  state = {
+    signedInUser: null,
+  }
+
+  createUser = (event) => {
+    event.preventDefault()
     fetch('http://localhost:3000/users', {
           method: 'POST',
           headers: {
@@ -11,25 +20,25 @@ class App extends Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            summonerName: "ROFLMFAO_LOL"
+            summonerName: event.target.children[0].value,
           })
         })
         .then(res => res.json())
         .then(json => {
-            console.log(json)
+          this.setState({
+            signedInUser: json
+          })
         })
   }
-  
+
   render() {
+    console.log(this.state)
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        {!this.state.signedInUser ?
+          <SignInForm createUser={this.createUser} /> :
+          <UserHomePage summonerInfo={this.state.signedInUser} />
+        }
       </div>
     );
   }
