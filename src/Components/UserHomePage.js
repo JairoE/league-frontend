@@ -7,7 +7,7 @@ export default class UserHomePage extends React.Component {
   render() {
     return (
       <div>
-        <VsDuoForm />
+        <VsDuoForm vsUser={this.props.vsUser} duoUser={this.props.duoUser} />
       </div>
     )
   }

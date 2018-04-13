@@ -36,6 +36,7 @@ class App extends Component {
   }
 
   vsUser = (summonerName) => {
+    console.log('here')
     summonerName = summonerName.replace(" ", "%20")
     fetch('http://localhost:3000/fetch_user', {
           method: 'POST',

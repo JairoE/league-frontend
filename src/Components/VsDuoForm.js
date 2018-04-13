@@ -6,14 +6,17 @@ const VsDuoForm = () => {
 
   const ButtonConditionals = () => (
     <Button.Group>
-      <Button>VS</Button>
-      <Button.Or />
-      <Button positive>Duo</Button>
+      <span>
+        <span><Button>VS</Button></span>
+        <span><Button.Or /></span>
+        <span><Button positive>Duo</Button></span>
+      </span>
     </Button.Group>
   )
 
   return(
     <div>
+
       <Form>
         <Input placeholder="Summoner Name" type="text" />
         {ButtonConditionals()}
