@@ -9,10 +9,12 @@ class App extends Component {
 
   state = {
     signedInUser: null,
+    vsUser: null,
+    duoUser: null
   }
 
-  createUser = (event) => {
-    event.preventDefault()
+  createUser = (summonerName) => {
+    summonerName = summonerName.replace(" ", "%20")
     fetch('http://localhost:3000/users', {
           method: 'POST',
           headers: {
@@ -20,7 +22,7 @@ class App extends Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            summonerName: event.target.children[0].value,
+            summonerName: summonerName,
           })
         })
         .then(res => res.json())
@@ -31,13 +33,20 @@ class App extends Component {
         })
   }
 
+  vsUser = (summonerName) => {
+
+  }
+
+  duoUser = (summonerName) => {
+    
+  }
   render() {
     console.log(this.state)
     return (
       <div>
         {!this.state.signedInUser ?
           <SignInForm createUser={this.createUser} /> :
-          <UserHomePage summonerInfo={this.state.signedInUser} />
+          <UserHomePage summonerInfo={this.state.signedInUser} createUser={this.createUser} />
         }
       </div>
     );
