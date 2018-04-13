@@ -5,7 +5,7 @@ import SoloStats from './SoloStats.js'
 
 export default class UserHomePage extends React.Component {
   componentDidMount(){
-    fetch(`http://localhost:3000/users/${this.props.summonerInfo.id}/stats`)
+    fetch(`http://localhost:3000/users/${this.props.summonerInfo.id}/matches`)
       .then(res => res.json())
       .then(json => {
 
