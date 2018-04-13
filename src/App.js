@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SignUpForm from './Components/SignUp.js';
 import SignInForm from './Components/SignIn.js'
 import UserHomePage from './Components/UserHomePage.js';
+import {Container, Grid} from 'semantic-ui-react'
 // import './App.css';
 
 
@@ -10,8 +11,8 @@ class App extends Component {
 
   state = {
     signedInUser: null,
-    vsUser: null,
-    duoUser: null
+    otherUser: null,
+    activeItem: null
   }
 
   createUser = (summonerName, email) => {
@@ -36,7 +37,6 @@ class App extends Component {
   }
 
   vsUser = (summonerName) => {
-    console.log('here')
     summonerName = summonerName.replace(" ", "%20")
     fetch('http://localhost:3000/fetch_user', {
           method: 'POST',
@@ -51,7 +51,8 @@ class App extends Component {
         .then(res => res.json())
         .then(json => {
           this.setState({
-            vsUser: json
+            otherUser: json,
+            activeItem: 'vs'
           })
         })
   }
@@ -71,7 +72,8 @@ class App extends Component {
         .then(res => res.json())
         .then(json => {
           this.setState({
-            duoUser: json
+            otherUser: json,
+            activeItem: 'duo'
           })
         })
   }
@@ -98,16 +100,27 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
-      <div>
-        {!this.state.signedInUser ?
-          (<div>
-            <SignUpForm createUser={this.createUser} />
-            <SignInForm signInUser={this.signInUser} />
-          </div>):
-          <UserHomePage summonerInfo={this.state.signedInUser} createUser={this.createUser} vsUser={this.vsUser} duoUser={this.duoUser} />
-        }
-      </div>
+        !this.state.signedInUser ?
+          (<Container>
+            <Grid>
+              <Grid.Row centered>
+                <Grid.Column width={6}>
+                  <SignUpForm createUser={this.createUser} />
+                  <SignInForm signInUser={this.signInUser} />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Container>
+
+          ):
+          <UserHomePage summonerInfo={this.state.signedInUser}
+                        otherUser={this.state.otherUser}
+                        vsUser={this.vsUser}
+                        duoUser={this.duoUser}
+                        activeItem={this.state.activeItem} />
+
     );
   }
 }

@@ -1,28 +1,37 @@
 import React from 'react'
-import {Button, Form, Input} from 'semantic-ui-react'
+import {Input, Menu} from 'semantic-ui-react'
 
 
-const VsDuoForm = () => {
+class VsDuoForm extends React.Component{
+  state={
+    otherUser: ""
+  }
 
-  const ButtonConditionals = () => (
-    <Button.Group>
-      <span>
-        <span><Button>VS</Button></span>
-        <span><Button.Or /></span>
-        <span><Button positive>Duo</Button></span>
-      </span>
-    </Button.Group>
-  )
+  inputChange = (event) => {
+    this.setState({
+      otherUser: event.target.value
+    })
+  }
 
-  return(
-    <div>
+  render(){
+    return(
+      <div>
+        <Menu attached='top' tabular>
+          <Menu.Item>
+            {this.props.summonerName}
+          </Menu.Item>
+          <Menu.Menu position='right' >
+            <Menu.Item>
+              <Input transparent  placeholder="Summoner Name" type="text" onChange={this.inputChange}/>
+            </Menu.Item>
+            <Menu.Item name='VS' active={this.props.activeItem === 'vs'} onClick={()=>{this.props.vsUser(this.state.otherUser)}} />
+            <Menu.Item name='Duo' active={this.props.activeItem === 'duo'} onClick={()=>{this.props.duoUser(this.state.otherUser)}} />
+          </Menu.Menu>
+        </Menu>
+      </div>
 
-      <Form>
-        <Input placeholder="Summoner Name" type="text" />
-        {ButtonConditionals()}
-      </Form>
-    </div>
-  )
+    )
+  }
 }
 
 export default VsDuoForm;
