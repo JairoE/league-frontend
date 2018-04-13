@@ -24,12 +24,12 @@ export default class SignUpForm extends React.Component {
       <div>
         <Form onSubmit={(event)=>{
           event.preventDefault();
-          this.props.signInUser(this.state.summonerName, this.state.email)
+          this.props.createUser(this.state.summonerName, this.state.email)
         }}>
 
           <Input placeholder="Summoner Name" type="text" onChange={this.summonerNameChange} />
           <Input placeholder="Email" type="text" onChange={this.summonerEmailChange}/>
-          <Button type="submit">Sign In</Button>
+          <Button type="submit">Sign Up</Button>
 
         </Form>
       </div>
