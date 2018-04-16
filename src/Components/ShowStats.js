@@ -24,7 +24,7 @@ class ShowStats extends React.Component {
     this.teamStats = this.props.stats.teams.filter ((team) => {
       return team.teamId === this.userStats.teamId
     })[0]
-    console.log(this.teamStats)
+    // console.log(this.teamStats)
   }
 
 
@@ -45,7 +45,14 @@ class ShowStats extends React.Component {
   }
 
   showExtraStats = () => {
-    return <p>"hi"</p>
+    console.log(this.userStats)
+    return (
+      <ul>
+        <li>Largest crit: {this.userStats.stats.largestCriticalStrike}</li>
+        <li>Time CCing others: {this.userStats.stats.timeCCingOthers}</li>
+        <li>Total vision wards: {this.userStats.stats.visionWardsBoughtInGame}</li>
+      </ul>
+    )
   }
 
   // console.log(props.stats.participantIdentities)
@@ -53,6 +60,7 @@ class ShowStats extends React.Component {
     return(
       <Card color="red" onClick={this.clickHandler}>
         <h1>Game outcome: {this.teamStats.win} </h1>
+        <h2>{this.userStats.stats.kills}/{this.userStats.stats.deaths}/{this.userStats.stats.assists}</h2>
         {this.state.champion !== null ?
           (<div><h2> Champion: {this.state.champion.nickname} </h2>
             <img src={this.state.champion.image_url} alt={this.state.champion.name}/>

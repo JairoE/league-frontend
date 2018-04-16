@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Button, Input } from 'semantic-ui-react';
+import '../App.css';
 
 export default class SignUpForm extends React.Component {
   state=({
@@ -21,14 +22,14 @@ export default class SignUpForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="sign-up-in">
         <Form onSubmit={(event)=>{
           event.preventDefault();
           this.props.createUser(this.state.summonerName, this.state.email)
         }}>
 
-          <Input placeholder="Summoner Name" type="text" onChange={this.summonerNameChange} />
-          <Input placeholder="Email" type="text" onChange={this.summonerEmailChange}/>
+          <Input placeholder="Summoner Name" type="text" onChange={this.summonerNameChange} /><br/><br/>
+          <Input placeholder="Email" type="text" onChange={this.summonerEmailChange}/><br/><br/>
           <Button type="submit">Sign Up</Button>
 
         </Form>
