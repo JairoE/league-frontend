@@ -1,4 +1,7 @@
 import React from 'react'
+import ShowStats from './ShowStats'
+import LoadingPage from './LoadingPage'
+
 
 class SoloStats extends React.Component{
   state = {
@@ -6,7 +9,7 @@ class SoloStats extends React.Component{
   }
 
   componentDidMount(){
-    let matches = this.props.matches
+    // let matches = this.props.matches
     let statsArray = []
     this.fetchMatchInfo(statsArray)
     // for(let i=0; i < 10; i++){
@@ -27,7 +30,7 @@ class SoloStats extends React.Component{
 
   fetchMatchInfo = (array) => {
     if(array.length<10){
-      console.log(array)
+      // console.log(array)
       let matchId = this.props.matches[array.length].id
       fetch(`http://localhost:3000/matches/${matchId}`)
       .then(res => res.json())
@@ -40,10 +43,29 @@ class SoloStats extends React.Component{
     }
   }
 
+  showStats = () => {
+    let returnedArray = []
+    let counter = 0
+    while (counter < 10) {
+      returnedArray.push(
+        <ShowStats
+          stats={this.state.stats[counter]}
+          summonerInfo = {this.props.summonerInfo}
+          key={counter}
+        />)
+      counter++
+    }
+    return returnedArray
+  }
+
   render(){
     return(
       <div>
-        {this.state.stats.length}
+        {
+          this.state.stats.length === 10 ?
+          this.showStats() :
+          <LoadingPage />
+        }
       </div>
     )
   }

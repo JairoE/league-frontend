@@ -26,7 +26,11 @@ export default class UserHomePage extends React.Component {
                   vsUser={this.props.vsUser}
                   duoUser={this.props.duoUser}
                   summonerName={this.props.summonerInfo.summonerName}/>
-        {this.state.userMatches.length > 0 ? <SoloStats matches={this.state.userMatches} /> : null}
+        {this.state.userMatches.length > 0 ?
+          <SoloStats
+            summonerInfo = {this.props.summonerInfo}
+            matches={this.state.userMatches} />
+          : null}
 
       </div>
     )

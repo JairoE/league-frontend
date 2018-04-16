@@ -37,3 +37,12 @@
   width: 100%;
 
 }
+
+.bg {
+  overflow: hidden;
+  /* position: absolute; */
+  width: 100%;
+	top: 2.85714286em;
+	left: 0;
+  z-index: -1;
+}
