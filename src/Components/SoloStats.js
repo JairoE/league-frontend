@@ -1,7 +1,7 @@
 import React from 'react'
 import ShowStats from './ShowStats'
 import LoadingPage from './LoadingPage'
-// import { Segment } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 
 
@@ -11,28 +11,12 @@ class SoloStats extends React.Component{
   }
 
   componentDidMount(){
-    // let matches = this.props.matches
     let statsArray = []
     this.fetchMatchInfo(statsArray)
-    // for(let i=0; i < 10; i++){
-    //   let matchId = matches[i].id
-    //   fetch(`http://localhost:3000/matches/${matchId}`)
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     statsArray.push(json)
-    //   })
-    // }
-    //
-    // this.setState({
-    //   stats: statsArray
-    // })
-
-
   }
 
   fetchMatchInfo = (array) => {
-    if(array.length<10){
-      // console.log(array)
+    if(array.length<15){
       let matchId = this.props.matches[array.length].id
       fetch(`http://localhost:3000/matches/${matchId}`)
       .then(res => res.json())
@@ -48,7 +32,7 @@ class SoloStats extends React.Component{
   showStats = () => {
     let returnedArray = []
     let counter = 0
-    while (counter < 10) {
+    while (counter < this.state.stats.length) {
       returnedArray.push(
         <ShowStats
           stats={this.state.stats[counter]}
@@ -64,8 +48,11 @@ class SoloStats extends React.Component{
     return(
       <div>
         {
-          this.state.stats.length === 10 ?
-          this.showStats() :
+          this.state.stats.length === 15 ?
+          <Card.Group itemsPerRow={3}>
+            {this.showStats()}
+          </Card.Group>
+          :
           // (<Segment attached="bottom">
             <LoadingPage />
           // </Segment>)
