@@ -1,6 +1,8 @@
 import React from 'react'
 import ShowStats from './ShowStats'
 import LoadingPage from './LoadingPage'
+// import { Segment } from 'semantic-ui-react'
+
 
 
 class SoloStats extends React.Component{
@@ -64,7 +66,9 @@ class SoloStats extends React.Component{
         {
           this.state.stats.length === 10 ?
           this.showStats() :
-          <LoadingPage />
+          // (<Segment attached="bottom">
+            <LoadingPage />
+          // </Segment>)
         }
       </div>
     )
