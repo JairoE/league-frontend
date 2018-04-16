@@ -12,7 +12,7 @@ class App extends Component {
   state = {
     signedInUser: null,
     otherUser: null,
-    activeItem: null
+    activeTab: null
   }
 
   createUser = (summonerName, email) => {
@@ -52,7 +52,7 @@ class App extends Component {
         .then(json => {
           this.setState({
             otherUser: json,
-            activeItem: 'vs'
+            activeTab: 'vs'
           })
         })
   }
@@ -73,7 +73,7 @@ class App extends Component {
         .then(json => {
           this.setState({
             otherUser: json,
-            activeItem: 'duo'
+            activeTab: 'duo'
           })
         })
   }
@@ -119,7 +119,7 @@ class App extends Component {
                         otherUser={this.state.otherUser}
                         vsUser={this.vsUser}
                         duoUser={this.duoUser}
-                        activeItem={this.state.activeItem} />
+                        activeTab={this.state.activeTab} />
 
     );
   }

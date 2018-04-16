@@ -24,8 +24,8 @@ class VsDuoForm extends React.Component{
             <Menu.Item>
               <Input transparent  placeholder="Summoner Name" type="text" onChange={this.inputChange}/>
             </Menu.Item>
-            <Menu.Item name='VS' active={this.props.activeItem === 'vs'} onClick={()=>{this.props.vsUser(this.state.otherUser)}} />
-            <Menu.Item name='Duo' active={this.props.activeItem === 'duo'} onClick={()=>{this.props.duoUser(this.state.otherUser)}} />
+            <Menu.Item name='VS' active={this.props.activeTab === 'vs'} onClick={()=>{this.props.vsUser(this.state.otherUser)}} />
+            <Menu.Item name='Duo' active={this.props.activeTab === 'duo'} onClick={()=>{this.props.duoUser(this.state.otherUser)}} />
           </Menu.Menu>
         </Menu>
       </div>
