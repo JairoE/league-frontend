@@ -15,16 +15,16 @@ class SoloStats extends React.Component{
     this.fetchMatchInfo(statsArray, -1)
   }
 
-  fetchMatchInfo = (array, num) => {
-    if(num > (-16)){
-      let matchId = this.props.matches.slice(num)[0].id
+  fetchMatchInfo = (array) => {
+    if(array.length < 15){
+      let matchId = this.props.matches[array.length].id
       fetch(`http://localhost:3000/matches/${matchId}`)
       .then(res => res.json())
       .then(json => {
         array.push(json)
         this.setState({
           stats: array
-        }, () => this.fetchMatchInfo(array, num-1) )
+        }, () => this.fetchMatchInfo(array) )
       })
     }
   }
@@ -53,9 +53,7 @@ class SoloStats extends React.Component{
             {this.showStats()}
           </Card.Group>
           :
-          // (<Segment attached="bottom">
             <LoadingPage />
-          // </Segment>)
         }
       </div>
     )
