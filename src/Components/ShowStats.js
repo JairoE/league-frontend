@@ -51,6 +51,8 @@ class ShowStats extends React.Component {
         <li>Largest crit: {this.userStats.stats.largestCriticalStrike}</li>
         <li>Time CCing others: {this.userStats.stats.timeCCingOthers}</li>
         <li>Total vision wards: {this.userStats.stats.visionWardsBoughtInGame}</li>
+        <li>Longest life: {(this.userStats.stats.longestTimeSpentLiving / 60.0).toFixed(2)}</li>
+        <li></li>
       </ul>
     )
   }

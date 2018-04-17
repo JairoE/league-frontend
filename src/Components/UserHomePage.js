@@ -7,27 +7,32 @@ import {Input, Menu} from 'semantic-ui-react'
 export default class UserHomePage extends React.Component {
   state = {
     userMatches: [],
-    summonerRank: 'unranked'
+    summonerStats: 'unranked'
   }
 
   componentDidMount(){
-    console.log(this.props.summonerInfo)
+    // console.log(this.props.summonerInfo)
+    console.log("component mounted");
     fetch(`http://localhost:3000/users/${this.props.summonerInfo.id}/matches`)
       .then(res => res.json())
+      .then(json => {this.setState({userMatches: json}, () => this.fetchRank())
+      })
+
+
+  }
+
+  fetchRank = () => {
+    fetch(`http://localhost:3000/users/${this.props.summonerInfo.id}/fetch_rank`)
+      .then(res => res.json())
       .then(json => {
-          this.setState({
-            userMatches: json
-          },()=>console.log(this.state.userMatches))
+        this.setState({
+          summonerStats: json[0]
+        }, console.log(this.state.summonerStats))
       })
   }
 
-  getRank = (rank) => {
-    this.setState({
-      summonerRank: rank,
-    })
-  }
-
   render() {
+    console.log(this.state.summonerStats)
     return (
       <div>
         <Menu attached='top' tabular>
@@ -35,7 +40,10 @@ export default class UserHomePage extends React.Component {
             {this.props.summonerInfo.summonerName}
           </Menu.Item>
           <Menu.Item>
-            {this.state.summonerRank}
+            {this.state.summonerStats.tier}
+          </Menu.Item>
+          <Menu.Item>
+            {this.state.summonerStats.wins}-{this.state.summonerStats.losses}
           </Menu.Item>
           <Menu.Menu position='right' >
             <Menu.Item>
@@ -47,7 +55,6 @@ export default class UserHomePage extends React.Component {
         </Menu>
          {this.state.userMatches.length > 0 ?
           <SoloStats
-            getRank = {this.getRank}
             summonerInfo = {this.props.summonerInfo}
             matches={this.state.userMatches} />
           : null}

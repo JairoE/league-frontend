@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import SignUpForm from './Components/SignUp.js';
 import SignInForm from './Components/SignIn.js'
 import UserHomePage from './Components/UserHomePage.js';
-import {Container, Grid} from 'semantic-ui-react'
+import {Container, Grid} from 'semantic-ui-react';
 import './App.css';
 
 
@@ -14,6 +15,12 @@ class App extends Component {
       signedInUser: null,
       // otherUser: null,
       // activeTab: null
+    }
+  }
+
+  componentWillUpdate = () => {
+    if (this.state.signedInUser !== null){
+      this.redirectUser()
     }
   }
 
@@ -129,24 +136,22 @@ class App extends Component {
   }
 
   redirectUser = () => {
-    window.history.pushState(null, null, '/home')
-    window.history.forward()
-    console.log(this.state.signedInUser)
-    // return (<Redirect to='/home' />)
+    if (this.props.location.pathname != '/home') {
+      this.props.history.push('/home');
+    }
   }
 
   render() {
+    const { location, history } = this.props
     return (
-      <Router>
           <div>
-            <Route exact path="/" render={ this.signInOrUpPath } />
-            <Route exact path="/home" render={ this.userHomePagePath } />
-            {this.state.signedInUser !== null
-              ?  <Redirect from="/" to="/home" /> : <Redirect to="/" />}
+            <Switch>
+              <Route exact path="/" render={ this.signInOrUpPath } />
+              <Route exact path="/home" render={ this.userHomePagePath } />
+            </Switch>
           </div>
-      </Router>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

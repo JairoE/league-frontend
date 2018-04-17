@@ -8,7 +8,6 @@ import { Card } from 'semantic-ui-react'
 class SoloStats extends React.Component{
   state = {
     stats: [],
-    retrievedRank: 0
 
   }
 
@@ -31,16 +30,6 @@ class SoloStats extends React.Component{
           retrievedRank: ++this.state.retrievedRank
         }, () => {
           this.fetchMatchInfo(array)
-          if (this.state.retrievedRank === 1) {
-            const participantId = this.state.stats[0].participantIdentities.filter (p => {
-              return p.player.summonerName === this.props.summonerInfo.summonerName
-            })[0].participantId
-            const participantRank = this.state.stats[0].participants[participantId-1].highestAchievedSeasonTier
-            this.props.getRank(participantRank)
-
-          }
-
-
         })
       })
     }
