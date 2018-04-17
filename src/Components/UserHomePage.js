@@ -7,7 +7,7 @@ import {Input, Menu} from 'semantic-ui-react'
 export default class UserHomePage extends React.Component {
   state = {
     userMatches: [],
-    summonerRank: null
+    summonerRank: 'unranked'
   }
 
   componentDidMount(){
@@ -21,8 +21,10 @@ export default class UserHomePage extends React.Component {
       })
   }
 
-  getRank = () => {
-
+  getRank = (rank) => {
+    this.setState({
+      summonerRank: rank,
+    })
   }
 
   render() {
@@ -33,7 +35,7 @@ export default class UserHomePage extends React.Component {
             {this.props.summonerInfo.summonerName}
           </Menu.Item>
           <Menu.Item>
-            {this.state.userMatches.length>0 ? this.getRank() : 'unranked'}
+            {this.state.summonerRank}
           </Menu.Item>
           <Menu.Menu position='right' >
             <Menu.Item>
@@ -45,6 +47,7 @@ export default class UserHomePage extends React.Component {
         </Menu>
          {this.state.userMatches.length > 0 ?
           <SoloStats
+            getRank = {this.getRank}
             summonerInfo = {this.props.summonerInfo}
             matches={this.state.userMatches} />
           : null}

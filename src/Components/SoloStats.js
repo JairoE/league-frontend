@@ -7,12 +7,16 @@ import { Card } from 'semantic-ui-react'
 
 class SoloStats extends React.Component{
   state = {
-    stats: []
+    stats: [],
+    retrievedRank: 0
+
   }
 
   componentDidMount(){
     let statsArray = []
     this.fetchMatchInfo(statsArray, -1)
+    // console.log(this.props
+    // debugger
   }
 
   fetchMatchInfo = (array) => {
@@ -23,8 +27,21 @@ class SoloStats extends React.Component{
       .then(json => {
         array.push(json)
         this.setState({
-          stats: array
-        }, () => this.fetchMatchInfo(array) )
+          stats: array,
+          retrievedRank: ++this.state.retrievedRank
+        }, () => {
+          this.fetchMatchInfo(array)
+          if (this.state.retrievedRank === 1) {
+            const participantId = this.state.stats[0].participantIdentities.filter (p => {
+              return p.player.summonerName === this.props.summonerInfo.summonerName
+            })[0].participantId
+            const participantRank = this.state.stats[0].participants[participantId-1].highestAchievedSeasonTier
+            this.props.getRank(participantRank)
+
+          }
+
+
+        })
       })
     }
   }
