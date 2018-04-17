@@ -12,19 +12,19 @@ class SoloStats extends React.Component{
 
   componentDidMount(){
     let statsArray = []
-    this.fetchMatchInfo(statsArray)
+    this.fetchMatchInfo(statsArray, -1)
   }
 
-  fetchMatchInfo = (array) => {
-    if(array.length<15){
-      let matchId = this.props.matches[array.length].id
+  fetchMatchInfo = (array, num) => {
+    if(num > (-16)){
+      let matchId = this.props.matches.slice(num)[0].id
       fetch(`http://localhost:3000/matches/${matchId}`)
       .then(res => res.json())
       .then(json => {
         array.push(json)
         this.setState({
           stats: array
-        }, () => this.fetchMatchInfo(array) )
+        }, () => this.fetchMatchInfo(array, num-1) )
       })
     }
   }

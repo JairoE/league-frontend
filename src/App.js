@@ -124,7 +124,7 @@ class App extends Component {
         .then(json => {
           this.setState({
             signedInUser: json
-          }, () => this.redirectUser())
+          })
         })
   }
 
@@ -138,18 +138,12 @@ class App extends Component {
   render() {
     return (
       <Router>
-
-        <div>
-          <Switch>
-            <Route exact path="/"
-              render={ this.signInOrUpPath }
-            />
-            <Route exact path="/home"
-              render={ this.userHomePagePath }
-            />
-          </Switch>
-        {/*this.state.signedInUser !== null ? this.redirectUser() : null */}
-        </div>
+          <div>
+            <Route exact path="/" render={ this.signInOrUpPath } />
+            <Route exact path="/home" render={ this.userHomePagePath } />
+            {this.state.signedInUser !== null
+              ?  <Redirect from="/" to="/home" /> : <Redirect to="/" />}
+          </div>
       </Router>
     );
   }
