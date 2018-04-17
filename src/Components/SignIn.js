@@ -36,3 +36,9 @@ export default class SignUpForm extends React.Component {
     )
   }
 }
+
+// {
+//   this.state.signedInUser !== null
+//   ? <Redirect to='/history' />
+//   : <Redirect to='/' />
+// }
