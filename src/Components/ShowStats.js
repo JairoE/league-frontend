@@ -22,6 +22,7 @@ class ShowStats extends React.Component {
     this.teamStats = this.props.stats.teams.filter ((team) => {
       return team.teamId === this.userStats.teamId
     })[0]
+
   }
 
 
@@ -41,6 +42,24 @@ class ShowStats extends React.Component {
     })
   }
 
+  getLane = () => {
+    let role = "Support"
+    switch(this.userStats.timeline.lane){
+      case "TOP":
+        role = "Top"
+        break;
+      case "MIDDLE":
+        role = "Middle"
+        break;
+      case "JUNGLE":
+        role = "Jungle"
+        break;
+      case "BOTTOM":
+        this.userStats.timeline.role ==="DUO_CARRY" ? role = "ADC" : role
+        break
+    }
+    return role
+  }
   showExtraStats = () => {
     return (
       <div className="centerStuff">
@@ -52,6 +71,7 @@ class ShowStats extends React.Component {
         <li>Longest life: {(this.userStats.stats.longestTimeSpentLiving / 60.0).toFixed(2)} mins</li>
         <li>Highest Kill Streak: {this.multiKills()}</li>
         <li>Gold earned/spent: {this.userStats.stats.goldEarned} / {this.userStats.stats.goldSpent}</li>
+        <li>CreepScore/Min: {(this.userStats.stats.totalMinionsKilled/(this.gameStats.gameDuration/60.0)).toFixed(1)}</li>
       </ul>
       </div>
     )
@@ -80,14 +100,15 @@ class ShowStats extends React.Component {
     date = new Date(date).toString().slice(0,-18)
     return date
   }
-  // console.log(props.stats.participantIdentities)
+
   render(){
     return(
       <Card id={this.teamStats.win==="Win" ? "winningCard" : "LosingCard"} color="red" onClick={this.clickHandler}>
         <div className="centerStuff">
           <h2 className="centerStuff">{this.datePlayed()}</h2>
-          <h3  className="centerStuff" >Game outcome: {this.teamStats.win} </h3>
+          <h3  className="centerStuff" > {this.gameStats.gameMode === "CLASSIC" ? "Ranked" : "ARAM"} Match outcome: {this.teamStats.win} </h3>
           <h3 className="centerStuff" > KDA: {this.userStats.stats.kills}/{this.userStats.stats.deaths}/{this.userStats.stats.assists}</h3>
+          <h4 className="centerStuff"> {this.gameStats.gameMode==="CLASSIC" ? this.getLane() : null} </h4>
           {this.state.champion !== null ?
             (<div className="imgStuff centerStuff" ><h3 className="centerStuff" > {this.state.champion.name}: {this.state.champion.nickname} </h3>
               <img src={this.state.champion.image_url} alt={this.state.champion.name}/>
