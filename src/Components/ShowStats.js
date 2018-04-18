@@ -51,6 +51,7 @@ class ShowStats extends React.Component {
         <li>Total vision wards: {this.userStats.stats.visionWardsBoughtInGame}</li>
         <li>Longest life: {(this.userStats.stats.longestTimeSpentLiving / 60.0).toFixed(2)} mins</li>
         <li>Highest Kill Streak: {this.multiKills()}</li>
+        <li>Gold earned/spent: {this.userStats.stats.goldEarned} / {this.userStats.stats.goldSpent}</li>
       </ul>
       </div>
     )
@@ -83,15 +84,17 @@ class ShowStats extends React.Component {
   render(){
     return(
       <Card id={this.teamStats.win==="Win" ? "winningCard" : "LosingCard"} color="red" onClick={this.clickHandler}>
-        <h2 className="centerStuff">{this.datePlayed()}</h2>
-        <h3  className="centerStuff" >Game outcome: {this.teamStats.win} </h3>
-        <h3 className="centerStuff" > KDA: {this.userStats.stats.kills}/{this.userStats.stats.deaths}/{this.userStats.stats.assists}</h3>
-        {this.state.champion !== null ?
-          (<div className="imgStuff centerStuff" ><h3 className="centerStuff" > {this.state.champion.name}: {this.state.champion.nickname} </h3>
-            <img src={this.state.champion.image_url} alt={this.state.champion.name}/>
-          </div>)
-          : null}
-        <p className="centerStuff" >Game length: {(this.gameStats.gameDuration/60.0).toFixed(2)} mins</p>
+        <div className="centerStuff">
+          <h2 className="centerStuff">{this.datePlayed()}</h2>
+          <h3  className="centerStuff" >Game outcome: {this.teamStats.win} </h3>
+          <h3 className="centerStuff" > KDA: {this.userStats.stats.kills}/{this.userStats.stats.deaths}/{this.userStats.stats.assists}</h3>
+          {this.state.champion !== null ?
+            (<div className="imgStuff centerStuff" ><h3 className="centerStuff" > {this.state.champion.name}: {this.state.champion.nickname} </h3>
+              <img src={this.state.champion.image_url} alt={this.state.champion.name}/>
+            </div>)
+            : null}
+          <p className="centerStuff" >Game length: {(this.gameStats.gameDuration/60.0).toFixed(2)} mins</p>
+        </div>
         {this.state.clicked ? this.showExtraStats() : null}
       </Card>
     )
