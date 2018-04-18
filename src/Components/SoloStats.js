@@ -35,6 +35,9 @@ class SoloStats extends React.Component{
   showStats = () => {
     let returnedArray = []
     let counter = 0
+    let stats = this.state.stats.sort((a,b) => {
+      return b.gameCreation - a.gameCreation
+    })
     while (counter < this.state.stats.length) {
       returnedArray.push(
         <ShowStats

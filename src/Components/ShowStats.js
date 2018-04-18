@@ -55,6 +55,7 @@ class ShowStats extends React.Component {
       </div>
     )
   }
+
   multiKills(){
     let x = "No MultiKills"
     if (this.userStats.stats.doubleKills !== 0){
@@ -72,11 +73,18 @@ class ShowStats extends React.Component {
 
     return x
   }
+
+  datePlayed = () =>{
+    let date = this.gameStats.gameCreation
+    date = new Date(date).toString().slice(0,-18)
+    return date
+  }
   // console.log(props.stats.participantIdentities)
   render(){
     return(
       <Card id={this.teamStats.win==="Win" ? "winningCard" : "LosingCard"} color="red" onClick={this.clickHandler}>
-        <h2  className="centerStuff" >Game outcome: {this.teamStats.win} </h2>
+        <h2 className="centerStuff">{this.datePlayed()}</h2>
+        <h3  className="centerStuff" >Game outcome: {this.teamStats.win} </h3>
         <h3 className="centerStuff" > KDA: {this.userStats.stats.kills}/{this.userStats.stats.deaths}/{this.userStats.stats.assists}</h3>
         {this.state.champion !== null ?
           (<div className="imgStuff centerStuff" ><h3 className="centerStuff" > {this.state.champion.name}: {this.state.champion.nickname} </h3>
