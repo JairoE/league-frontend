@@ -1,8 +1,6 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react'
-
-
-
+import '../App.css'
 
 class ShowStats extends React.Component {
   constructor(props){
@@ -24,7 +22,6 @@ class ShowStats extends React.Component {
     this.teamStats = this.props.stats.teams.filter ((team) => {
       return team.teamId === this.userStats.teamId
     })[0]
-    // console.log(this.teamStats)
   }
 
 
@@ -45,30 +42,48 @@ class ShowStats extends React.Component {
   }
 
   showExtraStats = () => {
-    console.log(this.userStats)
     return (
+      <div className="centerStuff">
+      <h4 className="centerStuff">Deets</h4>
       <ul>
         <li>Largest crit: {this.userStats.stats.largestCriticalStrike}</li>
-        <li>Time CCing others: {this.userStats.stats.timeCCingOthers}</li>
+        <li>Time CCing others: {this.userStats.stats.timeCCingOthers} seconds</li>
         <li>Total vision wards: {this.userStats.stats.visionWardsBoughtInGame}</li>
-        <li>Longest life: {(this.userStats.stats.longestTimeSpentLiving / 60.0).toFixed(2)}</li>
-        <li></li>
+        <li>Longest life: {(this.userStats.stats.longestTimeSpentLiving / 60.0).toFixed(2)} mins</li>
+        <li>Highest Kill Streak: {this.multiKills()}</li>
       </ul>
+      </div>
     )
   }
+  multiKills(){
+    let x = "No MultiKills"
+    if (this.userStats.stats.doubleKills !== 0){
+      x = "DoubleKill!"
+    }
+    if (this.userStats.stats.tripleKills !== 0){
+      x = "TripleKill!"
+    }
+    if (this.userStats.stats.quadraKills !== 0){
+      x = "QuadraKill!"
+    }
+    if (this.userStats.stats.pentaKills !== 0){
+      x = "PentaKill!"
+    }
 
+    return x
+  }
   // console.log(props.stats.participantIdentities)
   render(){
     return(
-      <Card color="red" onClick={this.clickHandler}>
-        <h1>Game outcome: {this.teamStats.win} </h1>
-        <h2>{this.userStats.stats.kills}/{this.userStats.stats.deaths}/{this.userStats.stats.assists}</h2>
+      <Card id={this.teamStats.win==="Win" ? "winningCard" : "LosingCard"} color="red" onClick={this.clickHandler}>
+        <h2  className="centerStuff" >Game outcome: {this.teamStats.win} </h2>
+        <h3 className="centerStuff" > KDA: {this.userStats.stats.kills}/{this.userStats.stats.deaths}/{this.userStats.stats.assists}</h3>
         {this.state.champion !== null ?
-          (<div><h2> Champion: {this.state.champion.nickname} </h2>
+          (<div className="imgStuff centerStuff" ><h3 className="centerStuff" > {this.state.champion.name}: {this.state.champion.nickname} </h3>
             <img src={this.state.champion.image_url} alt={this.state.champion.name}/>
           </div>)
           : null}
-        <p>Game length: {(this.gameStats.gameDuration/60.0).toFixed(2)} mins</p>
+        <p className="centerStuff" >Game length: {(this.gameStats.gameDuration/60.0).toFixed(2)} mins</p>
         {this.state.clicked ? this.showExtraStats() : null}
       </Card>
     )

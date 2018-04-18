@@ -13,13 +13,11 @@ class SoloStats extends React.Component{
 
   componentDidMount(){
     let statsArray = []
-    this.fetchMatchInfo(statsArray, -1)
-    // console.log(this.props
-    // debugger
+    this.fetchMatchInfo(statsArray)
   }
 
   fetchMatchInfo = (array) => {
-    if(array.length < 15){
+    if(array.length < 20){
       let matchId = this.props.matches[array.length].id
       fetch(`http://localhost:3000/matches/${matchId}`)
       .then(res => res.json())
@@ -27,7 +25,6 @@ class SoloStats extends React.Component{
         array.push(json)
         this.setState({
           stats: array,
-          retrievedRank: ++this.state.retrievedRank
         }, () => {
           this.fetchMatchInfo(array)
         })
@@ -54,8 +51,8 @@ class SoloStats extends React.Component{
     return(
       <div>
         {
-          this.state.stats.length === 15 ?
-          <Card.Group itemsPerRow={3}>
+          this.state.stats.length === 20 ?
+          <Card.Group itemsPerRow={4} id="cardGroup">
             {this.showStats()}
           </Card.Group>
           :

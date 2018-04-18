@@ -13,8 +13,6 @@ class App extends Component {
     super()
     this.state = {
       signedInUser: null,
-      // otherUser: null,
-      // activeTab: null
     }
   }
 
@@ -93,10 +91,11 @@ class App extends Component {
         <Container>
           <Grid>
             <Grid.Row centered>
-              <Grid.Column width={6}>
+              <Grid.Column width={3}>
                 <SignUpForm createUser={this.createUser} />
                 <SignInForm signInUser={this.signInUser} />
               </Grid.Column>
+
             </Grid.Row>
           </Grid>
         </Container>
@@ -104,13 +103,25 @@ class App extends Component {
     )
   }
 
+  logout = () =>{
+    this.setState({
+      signedInUser:null
+    })
+    if (this.props.location.pathname !== '/') {
+      this.props.history.push('/');
+    }
+
+  }
   userHomePagePath = () => {
-    return (
+    if(this.state.signedInUser === null){
+      this.props.history.push('/')
+      return null
+    }
+    return (<div className="aftertyler-bg">
       <UserHomePage summonerInfo={this.state.signedInUser}
                     otherUser={this.state.otherUser}
-                    vsUser={this.vsUser}
-                    duoUser={this.duoUser}
-                    activeTab={this.state.activeTab} />
+                    LogOut={this.logout}
+                    activeTab={this.state.activeTab} /></div>
     )
   }
 
@@ -136,13 +147,12 @@ class App extends Component {
   }
 
   redirectUser = () => {
-    if (this.props.location.pathname != '/home') {
+    if (this.props.location.pathname !== '/home') {
       this.props.history.push('/home');
     }
   }
 
   render() {
-    const { location, history } = this.props
     return (
           <div>
             <Switch>

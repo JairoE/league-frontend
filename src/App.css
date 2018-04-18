@@ -49,13 +49,68 @@
 
 #homescreen-bg {
     background-image: url("https://i.ytimg.com/vi/BGtROJeMPeE/maxresdefault.jpg");
-    height: 750px;
+    height: 100vh;
+    weight: 100vw;
+    margin: 0;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-}
 
+}
+li{
+  list-style-type: none;
+}
 #sign-up-in {
   /* top: 100px; */
-  padding-top: 100px;
+  padding-top: 125%;
+}
+
+.aftertyler-bg{
+  background-image: url("https://i.ytimg.com/vi/BGtROJeMPeE/maxresdefault.jpg");
+  /* top: 2.85714286em; */
+  weight: 100vw;
+  margin: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+.centerStuff {
+  margin: auto;
+}
+h4{
+  text-align: center;
+  margin-top: 10px;
+}
+.imgStuff {
+  display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+    height:150px;
+    width:300px;
+
+}
+
+h2,h3,h4,p{
+  color: black;
+}
+
+li{
+  color: black;
+  font-weight: bold;
+}
+
+#winningCard{
+  background-color: #55b536;
+  opacity: 0.8;
+}
+
+#LosingCard{
+  background-color: #c11b1b;
+  opacity: 0.8;
+}
+
+#cardGroup{
+  padding-left: 10px;
+  padding-right: 10px;
 }
