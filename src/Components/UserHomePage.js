@@ -14,7 +14,8 @@ export default class UserHomePage extends React.Component {
     // console.log(this.props.summonerInfo)
     fetch(`http://localhost:3000/users/${this.props.summonerInfo.id}/matches`)
       .then(res => res.json())
-      .then(json => {this.setState({userMatches: json}, () => this.fetchRank())
+      .then(json => {
+        this.setState({userMatches: json}, () => this.fetchRank())
       })
   }
 
@@ -22,8 +23,13 @@ export default class UserHomePage extends React.Component {
     fetch(`http://localhost:3000/users/${this.props.summonerInfo.id}/fetch_rank`)
       .then(res => res.json())
       .then(json => {
+        debugger
+        let stats = {tier: "unranked", wins:"N/A", losses: "N/A"}
+        if (json.length !== 0){
+          stats = json[0]
+        }
         this.setState({
-          summonerStats: json[0]
+          summonerStats: stats
         }, console.log(this.state.summonerStats))
       })
   }
@@ -32,6 +38,7 @@ export default class UserHomePage extends React.Component {
     if(this.state.summonerStats === "unranked"){
       return this.state.summonerStats
     }
+
     let x = this.state.summonerStats.tier
     let firstLetter = x[0]
     let rest = x.slice(1)
