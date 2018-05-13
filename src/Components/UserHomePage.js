@@ -15,6 +15,7 @@ export default class UserHomePage extends React.Component {
     fetch(`http://localhost:3000/users/${this.props.summonerInfo.id}/matches`)
       .then(res => res.json())
       .then(json => {
+        debugger
         this.setState({userMatches: json}, () => this.fetchRank())
       })
   }
@@ -23,7 +24,6 @@ export default class UserHomePage extends React.Component {
     fetch(`http://localhost:3000/users/${this.props.summonerInfo.id}/fetch_rank`)
       .then(res => res.json())
       .then(json => {
-        debugger
         let stats = {tier: "unranked", wins:"N/A", losses: "N/A"}
         if (json.length !== 0){
           stats = json[0]
